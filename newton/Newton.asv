@@ -1,0 +1,21 @@
+function Newton(X, Y)
+    n = length(X);
+    prev_fis = Y;
+    A = zeros(1, n);
+    curr_fis = zeros(1, n);
+    for i=1:n
+        A(i) = prev_fis(i);
+        for j=i+1:n
+            curr_fis(j) =  (prev_fis(j) - prev_fis(i)) / (X(j) - X(i));
+        end
+        prev_fis = curr_fis;
+    end
+    polyval = [0 0 1 -A(1)];
+    
+    for i=1:n
+        for j=1:i
+            curr_fis(j) =  (prev_fis(j) - prev_fis(i)) / (X(j) - X(i));
+        end
+        prev_fis = curr_fis;
+    end
+end
