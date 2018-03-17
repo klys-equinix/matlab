@@ -1,4 +1,4 @@
-function plot_polynomial(xx, polynomial, color)
+function plot_polynomial(xx, polynomial, color, results)
    n = length(polynomial);
    yy = zeros(1, length(xx));
    for i=1:length(xx)
@@ -6,5 +6,10 @@ function plot_polynomial(xx, polynomial, color)
            yy(i) = yy(i) + polynomial(j) * xx(i)^(n - j);
        end
    end
-   plot(xx, yy, color);
+   plot(xx, yy, color)
+   error = abs(results - yy);
+   disp('max');
+   disp(max(error));
+   disp('mean');
+   disp(mean(error));
 end
