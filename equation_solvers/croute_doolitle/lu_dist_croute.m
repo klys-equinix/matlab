@@ -1,4 +1,4 @@
-function [L, R] = lu_dist(A)
+function [L, R] = lu_dist_croute(A)
     n = size(A);
     L = zeros(n);
     R = zeros(n);
