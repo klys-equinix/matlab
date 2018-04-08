@@ -1,9 +1,0 @@
-function [A] = matrix_reverse(A)
-    n = length(A);
-    for k=1:n
-        for i=1:n
-            if i != k
-                A(i, k) = A(i, k) / A(
-        end
-    end
-end

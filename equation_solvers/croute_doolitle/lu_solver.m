@@ -1,6 +1,6 @@
 function lu_solver(A, b)
     n = length(A);
-    [L, R] = lu_dist(A);
+    [L, R] = lu_dist_croute(A);
     Y = zeros(1, n);
     X = zeros(1, n);
     for i=1:n
