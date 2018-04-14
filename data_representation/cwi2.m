@@ -51,12 +51,66 @@
 % imshow(o2);
 % end
 % Zadanie 14
-o = 5
-v = floor([rand(o,1)*10-5, rand(o,1)*200-2, rand(o,1)*1000])
+% o = 5
+% v = floor([rand(o,1)*10-5, rand(o,1)*200-2, rand(o,1)*1000])
 % [min(v) ; max(v) ; mean(v) ; std(v)] % podstawowe parametry
 % (v - ones(o,1)*min(v))./(ones(o,1)*(max(v) - min(v))) % normalizacja min-max
 % (v - ones(o,1)*mean(v))./(ones(o,1)*std(v)) % standaryzacja
-v = zscore(v) % funkcja realizująca standartyzację
+% v = zscore(v) % funkcja realizująca standartyzację
 
-mean(v)
-std(v)
+% mean(v)
+% std(v)
+
+% Zadanie 15
+
+% sam = load('samochody');
+
+% cov(sam.d{:, 1:3})
+% corr(sam.d{:, 1:3})
+
+% Zadanie 17
+
+% AA = [1 3 6 8 8 7 NaN 3 2 2 1];
+
+% nanmean(AA)
+
+% Zadanie 18
+% AA = [1 3 6 8 8 7 3 2 2 1];
+% A = [1 3 6 8 8 7 NaN 3 2 2 1];
+% calculate random number with normal dist for AA
+% x = normrnd(mean(AA), std(AA));
+% nanmean(A)
+% A(5) = x;
+% mean(A)
+
+% Zadanie 19 
+format long g
+% powrót do standardowego: format short
+[num txt raw] = xlsread('pasazerowie_lot.xls');
+
+d = array2table(num(:, 2:end)); % konwersja na postac tabeli
+kraje = txt(4:40,1);
+d.Properties.RowNames = kraje;
+lata = txt(3,2:13);
+lata2 = strrep(lata,'20','rok_20');
+d.Properties.VariableNames = lata2;
+
+
+start = 4;
+panstwa = start:size(d,1);
+% szukamy największego wzrostu względnego
+difproc = (d{panstwa,12} - d{panstwa,1})./d{panstwa,1} % wzrost względny
+% szukamy najw. wzrostu wzgl.:
+najw_wzrost_proc = find(difproc == max(difproc)) + start - 1
+kraje(najw_wzrost_proc) % który kraj miał taki wzrost ?
+% liczymy zmiany rok do roku, bezwzględne i względne
+for i = 1:11
+    difrok(panstwa,i)=d{panstwa,i+1}-d{panstwa,i};
+    difrokproc(panstwa,i)=(d{panstwa,i+1}-d{panstwa,i})./d{panstwa,i};
+end
+% kraj o największym wzroście 2015-16
+kraje(find(difrokproc(:,11) == max(difrokproc(:,11))))
+% kraj o najwiekszym wzroscie rok do roku
+kraje(find(difrokproc(:,:) == max(max(difrokproc(:,:)))))
+
+
