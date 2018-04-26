@@ -1,4 +1,4 @@
-function better_newton(F, fd, x_val, stage)
+function better_newton(F, x_val, stage)
     syms f(x) fd(x)
     f(x) = transform_into_sym(F);
     fd(x) = diff(f(x));
