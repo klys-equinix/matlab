@@ -36,3 +36,18 @@ end
 
 kraje(r)
 lata2(c)
+close all;
+subplot(2,2,1);
+plot(2005:2016, d{'Poland', :})
+hold on;
+plot(2005:2016, d{~ismember(kraje, 'Poland'), :})
+subplot(2,2,2);
+[dane ind] = sort(d{:, end}, 'descend');
+c = categorical(kraje(ind));
+bar(dane)
+xticklabels(kraje(ind))
+inflation = d{:, 12} - d{:, 1};
+subplot(2,2,3);
+pie([length(inflation(inflation < 0.1)) length(inflation((0.1 < inflation) & (inflation < 0.2))) length(inflation(inflation > 0.3))], {'a', 'b', 'c'})
+
+
