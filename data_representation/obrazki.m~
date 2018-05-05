@@ -1,0 +1,9 @@
+% Obrazki
+close all;
+imfinfo('lena.png')
+u = imread('uscal.png')
+whos u % Podstawowe dane o obrazie
+imshow(u)
+impixelinfo % Pokazuje informacje o pixelu po nejchaniu mysza na pixel
+cut_u = u(1:100, 1:100, :)
+imshow(cut_u)
