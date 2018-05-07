@@ -1,8 +1,8 @@
-function simple_integration(Y, h, d)
+function [res] = combined_integr(Y, h, d)
     res = 0;
     switch d
         case 1
-            res = sum(Y .* d);
+            res = sum(Y .* h);
         case 2
             rest = rem(length(Y), 2);
             for i=2:(length(Y) - rest)
@@ -36,5 +36,4 @@ function simple_integration(Y, h, d)
         otherwise
             res = NaN
     end
-    res
 end

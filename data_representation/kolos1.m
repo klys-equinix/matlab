@@ -8,9 +8,13 @@ d = array2table(num); % konwersja na postac tabeli
 d.Properties.RowNames = kraje;
 lata2 = strrep(lata,'20','rok_20');
 d.Properties.VariableNames = lata2;
+% Najwyzsza cena ever
 [i, j] = find(d{:, :} == max(max(d{:, :})));
-kraje(i)
-lata2(j)
+% kraje(i)
+% lata2(j)
+disp('najwyzsza cena ever')
+disp(d(i, j))
+% Najniższa cena ever
 [i, j] = find(d{:, :} == min(min(d{:, :})));
 kraje(i)
 lata2(j)
@@ -44,8 +48,9 @@ plot(2005:2016, d{~ismember(kraje, 'Poland'), :})
 subplot(2,2,2);
 [dane ind] = sort(d{:, end}, 'descend');
 c = categorical(kraje(ind));
-bar(dane)
-xticklabels(kraje(ind))
+barh(dane)
+set(gca, 'YTick', 1:28)
+set(gca,'yticklabel', kraje(ind))
 inflation = d{:, 12} - d{:, 1};
 subplot(2,2,3);
 %Inflacja
@@ -70,4 +75,3 @@ a = zscore(d{:, :}); %Standardyzacja - chociaz tu to jest bez sensu jka mamy jed
 % Wykresy analizy danych
 subplot(2,2,4);
 hist(reshape(d{:, :}, [1 12*28]))
-subplot(2, 2, 5)
