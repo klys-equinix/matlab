@@ -14,7 +14,7 @@ function integr_driver
              num_points = d * i + 1;
              X = linspace(-1, 1, num_points);
              Y = f(X);
-             h = 2 / (num_points - 1);
+             h = 2 / (num_points);
              solutions(d, i) = combined_integr(Y, h, d);
          end
      end
@@ -23,5 +23,5 @@ function integr_driver
            [1:1000], abs(solutions(3, :) - 2.0),...
            [1:1000], abs(solutions(4, :) - 2.0))
      legend('1', '2', '3', '4')
-     solutions(:, end)
+     solutions(:, end-10:end)
 end
