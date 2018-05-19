@@ -8,7 +8,7 @@ function [X N] = adam_bashforth(funct, x_zero, y_zero, h, num_points, grade)
     N = zeros(1, num_points);
     [X N] = heune_met(funct, x_zero, y_zero, h, grade - 1);
     
-    for i = grade + 1:n                                       um_points + 1
+    for i = grade + 1:num_points + 1
         X(i) = X(i - 1) + h;
         sub_sum = 0;
         for j=1:grade
