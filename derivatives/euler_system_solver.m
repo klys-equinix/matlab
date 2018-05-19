@@ -9,5 +9,4 @@ function [X N] = euler_system_solver(x_zero, y, h, steps, derivs_handle)
         X(i+1) = X(i) + h;
         N(:, i+1) = y;
     end
-    plot(X, N)
 end
