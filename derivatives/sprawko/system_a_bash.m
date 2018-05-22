@@ -8,12 +8,13 @@ function [X N] = system_a_bash(x_zero, y, h, steps, derivs_handle, grade)
     X = zeros(1, steps);
     [X N] = euler_system_solver(x_zero, y, h, grade - 1, derivs_handle);
     
-    for i = grade:num_points
+    for i = grade:steps
         sub_sum = 0;
         for j=1:grade
-            sub_sum = sub_sum + BETA(grade, j) .* funct(X(i - j), N(i - j));feval(derivs_handle, X(i - j), Y(i - j))
+            sub_sum = sub_sum + BETA(grade, j) .* feval(derivs_handle, X(i - j + 1), N(:, i - j + 1));
         end
-        N(i) = N(i - 1) + h * sub_sum;
+        N(:, i+1) = N(:, i) + h * sub_sum;
         X(i+1) = X(i) + h;
     end
+    plot(X, N)
 end

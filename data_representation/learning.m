@@ -87,15 +87,83 @@
 
 % Bayes
 
-%  load dane2
-%  c = cvpartition(d.klasa,'HoldOut',0.3);
-%  scatter(d{c.training,1},d{c.training,2},20,d{c.training,3},'filled')
-%  hold on
-%  scatter(d{c.test,1},d{c.test,2},20,d{c.test,3})
-%  hold off
-%  kl = fitcnb(d{c.training,1:2},d{c.training,3});
-%  wynik = kl.predict(d{c.training,1:2});
-%  confusionmat(d{c.training,3},wynik)
-%  wynik = kl.predict(d{c.test,1:2});
-%  confusionmat(d{c.test,3},wynik)
+% load dane3
+% c = cvpartition(d.klasa,'HoldOut',0.3);
+% scatter(d{c.training,1},d{c.training,2},20,d{c.training,3},'filled')
+% hold on
+% scatter(d{c.test,1},d{c.test,2},20,d{c.test,3})
+% hold off
+% kl = fitcnb(d{c.training,1:2},d{c.training,3});
+% wynik = kl.predict(d{c.training,1:2}); confusionmat(d{c.training,3},wynik)
+% wynik = kl.predict(d{c.test,1:2});
+% confusionmat(d{c.test,3},wynik)
 
+% Trees
+
+% load dane3
+% c = cvpartition(d.klasa,'HoldOut',0.3);
+% scatter(d{c.training,1}, d{c.training,2}, 20, d{c.training,3}, 'filled')
+% hold on
+% scatter(d{c.test,1},d{c.test,2},20,d{c.test,3})
+% hold off
+% kl = fitctree(d{c.training,1:2},d{c.training,3});
+% % wyswietlenie drzewa
+% view(kl)
+% wynik = kl.predict(d{c.training,1:2}); 
+% confusionmat(d{c.training,3},wynik)
+
+% Unsupervised learning
+
+% load dane1
+% subplot(2,1,1);
+% scatter(d.atrybut1,d.atrybut2,10,d.klasa);
+% title('dane oryginalne')
+% [kl c] = kmeans([d.atrybut1 d.atrybut2],3,'display','iter'); %kl - klasy obiektow, c - wspolrzedne centroidow 
+% subplot(2,1,2);
+% scatter(d.atrybut1,d.atrybut2,10,kl);
+% hold on;
+% scatter(c(:,1),c(:,2),30,[1 2 3]','*');
+% hold off
+% title('wynik grupowania')
+% crosstab(kl,d.klasa)
+
+% Położenie startowe centroidow
+
+% load 6klas
+% for i=1:5
+%     subplot(2,3,i);
+%     kl = kmeans(dane,3,'Start','sample','display','iter');
+%     scatter(dane(:,1),dane(:,2),2,kl);
+% end
+
+% load 6klas
+% kl = kmeans(dane,6,'Start','sample','display','final','Replicates',15);
+% scatter(dane(:,1),dane(:,2),2,kl);
+% % c = categorical(d.klasa);
+% crosstab(kl, klasy)
+
+% Dobór ilości grup
+
+% load 6klas
+% for i=1:11
+%     subplot(3,4,i);
+%     [kl c so] = kmeans(dane,i,'Replicates',15); %so to odleglosci puntktow dopasownych od centroidow -  chcemy zeby byly male ale nie za male
+%     scatter(dane(:,1),dane(:,2),2,kl);
+%     odl(i) = sum(so)/size(dane,1);
+%     if (i>1) dif(i-1) = (odl(i-1) - odl(i))/odl(i-1); end
+% end
+% subplot(3,4,12);
+% plot(odl);
+% max(find(dif>0.1))
+
+% laczenie grup - dendrogramy
+
+m = [ 1 30; 3 30; 4 30 ; 5 30 ; 1 20 ; 4 20 ; 1 10 ; 2 10]
+scatter(m(:,1),m(:,2),'filled');
+d = pdist(m,'seuclidean') % odległośc euklidesowa standaryzowana, wektor
+l1 = linkage(d,'single')
+l2 = linkage(d,'complete')
+l3 = linkage(d,'average')
+figure; dendrogram(l1);
+figure; dendrogram(l2);
+figure; dendrogram(l3);
