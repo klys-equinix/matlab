@@ -24,18 +24,22 @@ for i=1:4
     m{2, :} = median(t{t.klasa == i, 1:end-1});
     m{3, :} = std(t{t.klasa == i, 1:end-1});
     m{4, :} = var(t{t.klasa == i, 1:end-1});
+    disp('Tablica podstawowych miar statystycznych')
+    m 
     means{i, :} = m{1, :};
+%     Korelacja i kowariancja atrybutój klasy
     covariance = cov(t{t.klasa == i, 1:end-1});
     correlation = corr(t{t.klasa == i, 1:end-1});
 
 end
+disp('średnie wartości atrybutow dla klas')
 means
 means_std = std(means{:, :})
 means_total = mean(t{:, 1:end-1})
 rel_std = means_std ./ means_total
 attr_with_big_std = find(abs(rel_std) > 0.5);
 % attr_with_big_std = find(means_std > 5);
-disp('atrybuty o odchyleniu standardowym dla klas wiekszym niz 5')
+disp('atrybuty o odchyleniu standardowym dla klas wiekszym niz 0.5')
 attr_with_big_std
 
 total_cov = cov(t{:, 1:end-1});
@@ -68,7 +72,7 @@ end
 figure;
 subplot(1, 1, 1);
 plot(odl);
-max(find(dif>0.1))
+max(find(dif>0.1))%Znajdujemy ostatnia ilosc grup dla ktorej zwiekszenie ilosci grup o 1 da zmniejszenie odleglosci o 0.1
 
 disp('klasy a skupiska atrybutów')
 figure;
@@ -80,6 +84,19 @@ for i=1:4
         a= a + 1;
     end
 end
+
+disp('grupowanie - aglomeryzacja - sprawdzenie jakie dalo by to wyniki')
+d = pdist(dane, 'seuclidean'); % odległośc euklidesowa standaryzowana, wektor
+l = linkage(d, 'complete');
+c = cluster(l, 'maxclust', 4);
+diff = 0;
+for r=1:length(c)
+    if t{r, end} ~= c(r)
+        diff = diff +1;
+    end
+end
+disp('ilosc obiektow odmiennie przypisanych do klas w aglomeryzacji')
+diff 
 
 disp('klasyfikator najbliższych sasiadow')
 c = cvpartition(t.klasa,'HoldOut',0.3);
